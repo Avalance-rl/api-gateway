@@ -1,12 +1,13 @@
 package main
 
 import (
-	"github.com/avalance-rl/otiva/services/api-gateway/internal/internal/config"
-	"github.com/avalance-rl/otiva/services/api-gateway/internal/internal/gateway"
 	"log"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/avalance-rl/otiva/services/api-gateway/internal/internal/config"
+	"github.com/avalance-rl/otiva/services/api-gateway/internal/internal/gateway"
 )
 
 func main() {
@@ -14,7 +15,6 @@ func main() {
 	gw, err := gateway.NewGateway(
 		cfg.AuthService.Host + cfg.AuthService.Port,
 	)
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,7 +25,7 @@ func main() {
 	mux.HandleFunc("POST /auth/login", gw.Login)
 
 	// Защищенные эндпоинты продуктов
-	//mux.HandleFunc("/products/{.*}", gateway.AuthMiddleware(gateway.ProxyToProduct)).Methods("GET", "POST", "PUT", "DELETE")
+	// mux.HandleFunc("/products/{.*}", gateway.AuthMiddleware(gateway.ProxyToProduct)).Methods("GET", "POST", "PUT", "DELETE")
 
 	srv := &http.Server{
 		Handler:      mux,

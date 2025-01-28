@@ -2,10 +2,11 @@ package gateway
 
 import (
 	"context"
-	authv1 "github.com/avalance-rl/otiva/proto/gen/avalance.auth.v1"
-	jsoniter "github.com/json-iterator/go"
 	"net/http"
 	"strings"
+
+	authv1 "github.com/avalance-rl/otiva/proto/gen/avalance.auth.v1"
+	jsoniter "github.com/json-iterator/go"
 )
 
 var json = jsoniter.ConfigCompatibleWithStandardLibrary
@@ -18,7 +19,6 @@ func (g *Gateway) AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		resp, err := g.authClient.ValidateToken(r.Context(), &authv1.TokenRequest{
 			Token: token,
 		})
-
 		if err != nil {
 			http.Error(w, "Auth service error", http.StatusInternalServerError)
 			return
@@ -46,7 +46,6 @@ func (g *Gateway) Register(w http.ResponseWriter, r *http.Request) {
 		Email:    req.Email,
 		Password: req.Password,
 	})
-
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -66,7 +65,6 @@ func (g *Gateway) Login(w http.ResponseWriter, r *http.Request) {
 		Email:    req.Email,
 		Password: req.Password,
 	})
-
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
